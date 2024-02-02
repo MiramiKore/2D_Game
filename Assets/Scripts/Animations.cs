@@ -27,7 +27,7 @@ public class Animations : MonoBehaviour
 
 
 
-        if (UserInput.instance.controls.Attacking.Attack.WasPerformedThisFrame())
+        if (UserInput.instance.controls.Player.Attack.WasPerformedThisFrame())
         {
             attack = true;
         }
@@ -36,7 +36,7 @@ public class Animations : MonoBehaviour
             attack = false;
         }
 
-        if (UserInput.instance.controls.Damaging.Damage.WasPerformedThisFrame())
+        if (UserInput.instance.controls.Player.Damage.WasPerformedThisFrame())
         {
             damage = true;
         }

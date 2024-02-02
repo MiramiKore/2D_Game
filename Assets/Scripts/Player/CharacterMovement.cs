@@ -9,43 +9,32 @@ public class CharacterMovement : MonoBehaviour
 {
     [Header("Movement")]
     [SerializeField] private float moveSpeed = 10f;             //скорость перемещения
-    [SerializeField] private float speedController;             //константа скорости
+    private float speedController;                              //константа скорости
 
     [Header("Dash")]
     [SerializeField] private int dashImpulse = 6000;            //сила рывка (dash)
-    [SerializeField] private bool dashInAir;
-    [SerializeField] private float dashTime;
+    private bool dashInAir;
 
     [Header("Jump")]
     [SerializeField] private float jumpForce = 12f;             //сила прыжка
     [SerializeField] private float doubleJumpForce = 0.8f;      //сила второго прыжка
-    [SerializeField] private bool doubleJump;                   //возможность второго прыжка
+    private bool doubleJump;                                    //возможность второго прыжка
 
     [Header("Gliding")]
     [SerializeField] private float fallingSpeed= 5f;            //скорость падения персонажа во время планирования
     [SerializeField] private float glindingSpeed = 0.5f;        //скорость персонажа во время планирования
-    [SerializeField] private float glideCheckTimer;             //таймер планирования
     [SerializeField] private float jumpForceBeforeGlide = 2.1f; //сила прыжка перед планированием
-    [SerializeField] private bool glideStatus;                  //статус планирования
-    [SerializeField] private bool glidingMode;                  //режим планирования
+    private bool glideStatus = true;                            //статус планирования
+    private bool glidingMode;                                   //режим планирования
 
     [Header("Camera Stuff")]
     [SerializeField] private GameObject cameraFollowGo;         //следование камеры за персонажем
 
-    [HideInInspector] public bool isFacingRight;                //положение поворота персонажа
+    [HideInInspector] public bool isFacingRight = true;         //положение поворота персонажа
 
     static public Rigidbody2D rb;                           
-    private float _moveInput;            //перемещение  (кнопка нажата)
-    private bool _jumpInput;             //прыжок       (кнопка нажата)
-    private bool _dashInput;             //рывок        (кнопка нажата)
-    private bool _glideInput;            //планирование (кнопка нажата)
-    private bool _glideInputPressed;     //планирование (кнопка удерживается)
-    private bool _glideInputReleased;    //планирование (кнопка отпущена)
 
-    private bool isJumping;              //хранение значения прыгнул ли персонаж        
-    private bool isFalling;              //хранение значения падает ли персонаж
-
-    private float initialGravityScale;   //первоначальное значение гравитации
+    private float initialGravityScale;                          //первоначальное значение гравитации
 
     private CameraFollowObject cameraFollowObject;
     private float fallSpeedYDampingChangeThreshold;
@@ -77,14 +66,12 @@ public class CharacterMovement : MonoBehaviour
     #region Movement Function
     private void Move()
     {
-        _moveInput = UserInput.instance.moveInput.x;
-
-        if (_moveInput > 0 || _moveInput < 0)
+        if (UserInput.instance.moveInput.x > 0 || UserInput.instance.moveInput.x < 0)
         {
             TurnCheck();
         }
 
-        rb.velocity = new Vector2(_moveInput * moveSpeed, rb.velocity.y);
+        rb.velocity = new Vector2(UserInput.instance.moveInput.x * moveSpeed, rb.velocity.y);
     }
     #endregion
 
@@ -125,14 +112,11 @@ public class CharacterMovement : MonoBehaviour
     #region Jump Function
     void Jump()
     {
-        _jumpInput = UserInput.instance.controls.Jumping.Jump.WasPressedThisFrame();
-
-        if (_jumpInput)
+        if (UserInput.instance.controls.Player.Jump.WasPressedThisFrame())
         {
             //первый прыжок
             if (ObjectChecker.isGround)
             {
-                isJumping = true;
                 doubleJump = true;
                 rb.velocity = new Vector2(rb.velocity.x, jumpForce);
                 Timer.jumpTimer = 0.7f;
@@ -148,7 +132,6 @@ public class CharacterMovement : MonoBehaviour
         if (Timer.jumpTimer < 0 && ObjectChecker.isGround)
         {
             doubleJump = false;
-            isJumping = false;
         }
     }
     #endregion
@@ -156,10 +139,7 @@ public class CharacterMovement : MonoBehaviour
     #region Dash Function
     void Dash()
     {
-        _dashInput = UserInput.instance.controls.Dashing.Dash.WasPressedThisFrame();
-        dashTime = Timer.dashTimer;
-
-        if (_dashInput && Timer.dashTimer <= 0)
+        if (UserInput.instance.controls.Player.Dash.WasPressedThisFrame() && Timer.dashTimer <= 0)
         {
             dashInAir = true;
             rb.velocity = new Vector2(0, 0);
@@ -176,7 +156,7 @@ public class CharacterMovement : MonoBehaviour
             }
         }
 
-        if (!ObjectChecker.isGround && _dashInput && dashInAir)
+        if (!ObjectChecker.isGround && UserInput.instance.controls.Player.Dash.WasPressedThisFrame() && dashInAir)
         {
             Timer.dashTimer = 2f;
             dashInAir = false;
@@ -187,21 +167,16 @@ public class CharacterMovement : MonoBehaviour
     #region Gliding Function
     void Gliding()
     {
-        glideCheckTimer = Timer.glideTimer;
-
-        _glideInput = UserInput.instance.controls.Gliding.Glide.WasPressedThisFrame();
-        _glideInputPressed = UserInput.instance.controls.Gliding.Glide.IsPressed();
-        _glideInputReleased = UserInput.instance.controls.Gliding.Glide.WasReleasedThisFrame();
-
         //переход в режим планирования (подготовка)
-        if (ObjectChecker.isGround && glideStatus && _glideInput)
+        if (ObjectChecker.isGround && glideStatus && UserInput.instance.controls.Player.Glide.WasPressedThisFrame())
         {
             glidingMode = true;
             glideStatus = false;
             Timer.glideTimer = 2f;
             moveSpeed = 0f;
         }
-        else if (_glideInputReleased)
+        //клавиша глайда была отпущена
+        else if (UserInput.instance.controls.Player.Glide.WasReleasedThisFrame())
         {
             glidingMode = false;
             glideStatus = true;
@@ -209,12 +184,12 @@ public class CharacterMovement : MonoBehaviour
             Timer.glideTimer = 0f;
         }
         //прыжок перед планированием
-        if (Timer.glideTimer <= 0f && ObjectChecker.isGround && glidingMode && _glideInputPressed)
+        if (Timer.glideTimer <= 0f && ObjectChecker.isGround && glidingMode && UserInput.instance.controls.Player.Glide.IsPressed())
         {
             rb.velocity = new Vector2(rb.velocity.x, jumpForce * jumpForceBeforeGlide);
         }
         //планирование
-        if (rb.velocity.y <= 0 && !ObjectChecker.isGround && _glideInputPressed)
+        if (rb.velocity.y <= 0 && !ObjectChecker.isGround && UserInput.instance.controls.Player.Glide.IsPressed())
         {
             moveSpeed = speedController;
             rb.gravityScale = 0f;
