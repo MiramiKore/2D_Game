@@ -5,27 +5,31 @@ using UnityEngine.InputSystem;
 
 public class Animations : MonoBehaviour
 {
-    [Header("Animation")]
-    [SerializeField] private bool damage;
+    [Header("Damage")]
+    [SerializeField] private bool damageLow;
+    [SerializeField] private bool damageBig;
+
+    [Header("Attack")]
+    [SerializeField] private bool attackUp;
     [SerializeField] private bool attack;
 
     Animator animator;
 
-
-
-    // Start is called before the first frame update
     void Start()
     {
         animator = GetComponent<Animator>();
     }
 
-    // Update is called once per frame
     void Update()
     {
+        AttackAnimation();
+        DamageAnimation();
+    }
+
+    private void AttackAnimation()
+    {
         animator.SetBool("isAttack", attack);
-        animator.SetBool("isDamage", damage);
-
-
+        animator.SetBool("isAttackUp", attackUp);
 
         if (UserInput.instance.controls.Player.Attack.WasPerformedThisFrame())
         {
@@ -36,13 +40,37 @@ public class Animations : MonoBehaviour
             attack = false;
         }
 
-        if (UserInput.instance.controls.Player.Damage.WasPerformedThisFrame())
+        if (UserInput.instance.controls.Player.VectorUp.IsPressed() && attack)
         {
-            damage = true;
+            attackUp = true;
         }
         else
         {
-            damage= false;
+            attackUp = false;
+        }
+    }
+
+    private void DamageAnimation()
+    {
+        animator.SetBool("isDamageLow", damageLow);
+        animator.SetBool("isDamageBig", damageBig);
+
+        if (UserInput.instance.controls.Player.DamageLow.WasPerformedThisFrame())
+        {
+            damageLow = true;
+        }
+        else
+        {
+            damageLow = false;
+        }
+
+        if (UserInput.instance.controls.Player.DamageBig.WasPerformedThisFrame())
+        {
+            damageBig = true;
+        }
+        else
+        {
+            damageBig = false;
         }
     }
 }

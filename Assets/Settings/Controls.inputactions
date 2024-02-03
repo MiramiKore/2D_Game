@@ -51,9 +51,27 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Damage",
+                    "name": "VectorUp",
+                    "type": "PassThrough",
+                    "id": "01e04c31-99ad-4ed0-b8f2-5e98274b5b27",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "DamageBig",
                     "type": "PassThrough",
                     "id": "3d8a94d7-845f-414d-9782-07ab4e02733b",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "DamageLow",
+                    "type": "PassThrough",
+                    "id": "f3735bc7-2d2d-4409-80dd-a21417e30009",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -71,28 +89,6 @@
                     "action": "Move",
                     "isComposite": true,
                     "isPartOfComposite": false
-                },
-                {
-                    "name": "up",
-                    "id": "5a403af9-72fa-4871-a5e9-2cd3bc06dc1b",
-                    "path": "<Keyboard>/w",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Keyboard & Mouse",
-                    "action": "Move",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
-                    "name": "down",
-                    "id": "02850fab-a2be-4e33-b956-e377f9fa719e",
-                    "path": "<Keyboard>/s",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Keyboard & Mouse",
-                    "action": "Move",
-                    "isComposite": false,
-                    "isPartOfComposite": true
                 },
                 {
                     "name": "left",
@@ -126,28 +122,6 @@
                     "action": "Move",
                     "isComposite": true,
                     "isPartOfComposite": false
-                },
-                {
-                    "name": "up",
-                    "id": "a5807ed5-57b3-4bf5-8500-2b8828a5efb8",
-                    "path": "<Keyboard>/upArrow",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Keyboard & Mouse",
-                    "action": "Move",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
-                    "name": "down",
-                    "id": "1a83ae8a-ee91-4914-a2ca-b8eedebca6e2",
-                    "path": "<Keyboard>/downArrow",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Keyboard & Mouse",
-                    "action": "Move",
-                    "isComposite": false,
-                    "isPartOfComposite": true
                 },
                 {
                     "name": "left",
@@ -266,7 +240,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard & Mouse",
-                    "action": "Damage",
+                    "action": "DamageBig",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -278,6 +252,28 @@
                     "processors": "",
                     "groups": "Keyboard & Mouse",
                     "action": "Attack",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "ba48a898-c4e0-455a-8674-4eacb7f8f35a",
+                    "path": "<Keyboard>/q",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard & Mouse",
+                    "action": "DamageLow",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "f3f3bc15-319a-4d9f-a399-afbb16e98b8f",
+                    "path": "<Keyboard>/w",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard & Mouse",
+                    "action": "VectorUp",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
