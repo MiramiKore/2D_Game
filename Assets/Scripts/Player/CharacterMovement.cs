@@ -139,27 +139,31 @@ public class CharacterMovement : MonoBehaviour
     #region Dash Function
     void Dash()
     {
-        if (UserInput.instance.controls.Player.Dash.WasPressedThisFrame() && Timer.dashTimer <= 0)
+        if (UserInput.instance.controls.Player.Dash.WasPressedThisFrame()/* && Timer.dashTimer <= 0*/)
         {
-            dashInAir = true;
-            rb.velocity = new Vector2(0, 0);
-            Timer.dashTimer = 1f;
 
-            if (!isFacingRight && !ObjectChecker.isWallLeft)
-            {
-                rb.AddForce(Vector2.left * dashImpulse);
-            }
 
-            if (isFacingRight && !ObjectChecker.isWallRight)
-            {
-                rb.AddForce(Vector2.right * dashImpulse);
-            }
+
+
+            //dashInAir = true;
+            //rb.velocity = new Vector2(0, 0);
+            //Timer.dashTimer = 1f;
+
+            //if (!isFacingRight && !ObjectChecker.isWallLeft)
+            //{
+            //    rb.AddForce(Vector2.left * dashImpulse);
+            //}
+
+            //if (isFacingRight && !ObjectChecker.isWallRight)
+            //{
+            //    rb.AddForce(Vector2.right * dashImpulse);
+            //}
         }
 
-        if (!ObjectChecker.isGround && UserInput.instance.controls.Player.Dash.WasPressedThisFrame() && dashInAir)
-        {
-            Timer.dashTimer = 2f;
-            dashInAir = false;
+        //if (!ObjectChecker.isGround && UserInput.instance.controls.Player.Dash.WasPressedThisFrame() && dashInAir)
+        //{
+        //    Timer.dashTimer = 2f;
+        //    dashInAir = false;
         }
     }
     #endregion
