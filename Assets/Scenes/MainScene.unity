@@ -123,6 +123,11 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &23136061 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8788676579422065138, guid: dd273ba95c4cf60448c2a0ae7cea6f5e, type: 3}
+  m_PrefabInstance: {fileID: 1829455345787031125}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &188589545
 GameObject:
   m_ObjectHideFlags: 0
@@ -6819,51 +6824,6 @@ Transform:
   - {fileID: 1583829632}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &903280638
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 903280640}
-  - component: {fileID: 903280639}
-  m_Layer: 0
-  m_Name: GameManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &903280639
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 903280638}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 97fdad92031d99140bff9ca8f50f4436, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  moveInput: {x: 0, y: 0}
---- !u!4 &903280640
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 903280638}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1433844858
 GameObject:
   m_ObjectHideFlags: 3
@@ -11116,13 +11076,173 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 8788676579422065138, guid: dd273ba95c4cf60448c2a0ae7cea6f5e, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 7862047135790304507}
+    - targetCorrespondingSourceObject: {fileID: 8788676579422065138, guid: dd273ba95c4cf60448c2a0ae7cea6f5e, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 7862047135790304506}
+    - targetCorrespondingSourceObject: {fileID: 8788676579422065138, guid: dd273ba95c4cf60448c2a0ae7cea6f5e, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 7862047135790304512}
   m_SourcePrefab: {fileID: 100100000, guid: dd273ba95c4cf60448c2a0ae7cea6f5e, type: 3}
 --- !u!4 &7862047135790304505 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6910238490167842052, guid: dd273ba95c4cf60448c2a0ae7cea6f5e, type: 3}
   m_PrefabInstance: {fileID: 1829455345787031125}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &7862047135790304506
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 23136061}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2aa9398c74a7ee04ea45e80c57ec0724, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damageLow: 0
+  damageBig: 0
+  attackUp: 0
+  attack: 0
+--- !u!114 &7862047135790304507
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 23136061}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 389208e952d3c614fa0517a7ab32d226, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isFacingRight: 1
+  moveSpeed: 10
+  dashImpulse: 0
+  jumpForce: 12
+  doubleJumpForce: 11
+  fallingSpeed: 5
+  glindingSpeed: 0.5
+  jumpForceBeforeGlide: 2.1
+  playerInput: {fileID: 0}
+--- !u!114 &7862047135790304512
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 23136061}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Actions: {fileID: -944628639613478452, guid: 1640be67ca894344ab4d2894c8a35a2f, type: 3}
+  m_NotificationBehavior: 2
+  m_UIInputModule: {fileID: 0}
+  m_DeviceLostEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_DeviceRegainedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ControlsChangedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ActionEvents:
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 7862047135790304507}
+        m_TargetAssemblyTypeName: CharacterMovement, Assembly-CSharp
+        m_MethodName: OnMove
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 42909931-ab7d-4a1f-976b-9527af7bc7a6
+    m_ActionName: Player/Move[/Keyboard/a,/Keyboard/d,/Keyboard/leftArrow,/Keyboard/rightArrow]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 7862047135790304507}
+        m_TargetAssemblyTypeName: CharacterMovement, Assembly-CSharp
+        m_MethodName: OnJump
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: e7af8ee9-b40a-4c11-a9fb-30187882927f
+    m_ActionName: Player/Jump[/Keyboard/space]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 7862047135790304507}
+        m_TargetAssemblyTypeName: CharacterMovement, Assembly-CSharp
+        m_MethodName: OnHighJump
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 1de0f6a0-ba49-4aec-a005-4736bc81afea
+    m_ActionName: Player/HighJump[/Keyboard/q]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 7862047135790304507}
+        m_TargetAssemblyTypeName: CharacterMovement, Assembly-CSharp
+        m_MethodName: OnGlide
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 0fae739e-0541-4ab7-a45f-d0de032b8817
+    m_ActionName: Player/Glide[/Keyboard/space]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 7103d21a-f162-42d8-8761-cb9c5f57d1e8
+    m_ActionName: Player/Dash[/Keyboard/leftShift]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 76d411f9-2b4b-45ba-a4e2-6814097debce
+    m_ActionName: Player/Attack[/Mouse/leftButton]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 01e04c31-99ad-4ed0-b8f2-5e98274b5b27
+    m_ActionName: Player/VectorUp[/Keyboard/w]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 3d8a94d7-845f-414d-9782-07ab4e02733b
+    m_ActionName: Player/DamageBig[/Keyboard/e]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: f3735bc7-2d2d-4409-80dd-a21417e30009
+    m_ActionName: Player/DamageLow[/Keyboard/q]
+  m_NeverAutoSwitchControlSchemes: 0
+  m_DefaultControlScheme: 
+  m_DefaultActionMap: Player
+  m_SplitScreenIndex: -1
+  m_Camera: {fileID: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
@@ -11132,6 +11252,5 @@ SceneRoots:
   - {fileID: 687929445}
   - {fileID: 863889662}
   - {fileID: 570122862}
-  - {fileID: 903280640}
   - {fileID: 554529137}
   - {fileID: 1754167317}

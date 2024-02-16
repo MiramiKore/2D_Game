@@ -13,8 +13,6 @@ GameObject:
   - component: {fileID: 9005410299795544538}
   - component: {fileID: 1251894867684817054}
   - component: {fileID: 7283227564543821392}
-  - component: {fileID: 6320824988051156663}
-  - component: {fileID: 1737060011799664373}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -182,45 +180,3 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &6320824988051156663
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8788676579422065138}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 389208e952d3c614fa0517a7ab32d226, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  moveSpeed: 10
-  speedController: 0
-  dashImpulse: 6000
-  dashInAir: 0
-  dashTime: 0
-  jumpForce: 12
-  doubleJumpForce: 1
-  doubleJump: 0
-  fallingSpeed: 5
-  glindingSpeed: 0.6
-  glideCheckTimer: 0
-  jumpForceBeforeGlide: 2.15
-  glideStatus: 0
-  glidingMode: 0
-  cameraFollowGo: {fileID: 0}
-  isFacingRight: 0
---- !u!114 &1737060011799664373
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8788676579422065138}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2aa9398c74a7ee04ea45e80c57ec0724, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  damage: 0
-  attack: 0

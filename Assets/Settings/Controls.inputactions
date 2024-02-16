@@ -20,22 +20,31 @@
                     "id": "e7af8ee9-b40a-4c11-a9fb-30187882927f",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": "",
+                    "interactions": "Tap(duration=0.4)",
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Dash",
-                    "type": "PassThrough",
-                    "id": "7103d21a-f162-42d8-8761-cb9c5f57d1e8",
+                    "name": "HighJump",
+                    "type": "Button",
+                    "id": "1de0f6a0-ba49-4aec-a005-4736bc81afea",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": "",
+                    "interactions": "Hold(duration=2)",
                     "initialStateCheck": false
                 },
                 {
                     "name": "Glide",
                     "type": "PassThrough",
                     "id": "0fae739e-0541-4ab7-a45f-d0de032b8817",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "Press(behavior=2)",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Dash",
+                    "type": "PassThrough",
+                    "id": "7103d21a-f162-42d8-8761-cb9c5f57d1e8",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -224,17 +233,6 @@
                 },
                 {
                     "name": "",
-                    "id": "2393cd4c-3e4f-43d7-9df2-31d3398e4630",
-                    "path": "<Keyboard>/g",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Keyboard & Mouse",
-                    "action": "Glide",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "229d7791-ed33-4dee-b69a-3f7b5898c900",
                     "path": "<Keyboard>/e",
                     "interactions": "",
@@ -274,6 +272,28 @@
                     "processors": "",
                     "groups": "Keyboard & Mouse",
                     "action": "VectorUp",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "a9e828f8-c9a0-4dd0-bb9f-59f432ee63f9",
+                    "path": "<Keyboard>/q",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard & Mouse",
+                    "action": "HighJump",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "2393cd4c-3e4f-43d7-9df2-31d3398e4630",
+                    "path": "<Keyboard>/space",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard & Mouse",
+                    "action": "Glide",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
