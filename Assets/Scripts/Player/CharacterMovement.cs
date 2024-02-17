@@ -10,35 +10,35 @@ using UnityEngine.InputSystem;
 public class CharacterMovement : MonoBehaviour
 {  
     [Header("Movement")]
-    [HideInInspector] public bool isFacingRight = true;             //положение поворота персонажа
-    [SerializeField] private float moveSpeed = 12f;                 //скорость перемещения
-    private float speedController;                                  //константа скорости
-    private Vector2 _moveDirection;                                 //вектор движения
+    [HideInInspector] public bool isFacingRight = true;             //РїРѕР»РѕР¶РµРЅРёРµ РїРѕРІРѕСЂРѕС‚Р° РїРµСЂСЃРѕРЅР°Р¶Р°
+    [SerializeField] private float moveSpeed = 12f;                 //СЃРєРѕСЂРѕСЃС‚СЊ РїРµСЂРµРјРµС‰РµРЅРёСЏ
+    private float speedController;                                  //РєРѕРЅСЃС‚Р°РЅС‚Р° СЃРєРѕСЂРѕСЃС‚Рё
+    private Vector2 _moveDirection;                                 //РІРµРєС‚РѕСЂ РґРІРёР¶РµРЅРёСЏ
 
     [Header("Jump")]
-    [SerializeField] private float jumpForce = 12f;                 //сила прыжка
-    [SerializeField] private float doubleJumpForce = 0.8f;          //сила второго прыжка
-    private bool doubleJump;                                        //возможность второго прыжка
+    [SerializeField] private float jumpForce = 12f;                 //СЃРёР»Р° РїСЂС‹Р¶РєР°
+    [SerializeField] private float doubleJumpForce = 0.8f;          //СЃРёР»Р° РІС‚РѕСЂРѕРіРѕ РїСЂС‹Р¶РєР°
+    private bool doubleJump;                                        //РІРѕР·РјРѕР¶РЅРѕСЃС‚СЊ РІС‚РѕСЂРѕРіРѕ РїСЂС‹Р¶РєР°
 
     [Header("Dash")]
-    [SerializeField] private float dashSpeed = 20f;                 //скорость рывка
-    [SerializeField] private float dashDuration = 0.1f;             //длительность рывка
-    [SerializeField] private float dashCooldown = 0.1f;             //перезарядка рывка
-    [SerializeField] private float dashCooldownInGlide = 0.1f;      //перезарядка рывка при планировании
-    private bool canDash = true;                                    //может ли персонаж сделать рывок
-    private bool isDashing;                                         //делает ли персонаж рывок
+    [SerializeField] private float dashSpeed = 20f;                 //СЃРєРѕСЂРѕСЃС‚СЊ СЂС‹РІРєР°
+    [SerializeField] private float dashDuration = 0.1f;             //РґР»РёС‚РµР»СЊРЅРѕСЃС‚СЊ СЂС‹РІРєР°
+    [SerializeField] private float dashCooldown = 0.1f;             //РїРµСЂРµР·Р°СЂСЏРґРєР° СЂС‹РІРєР°
+    [SerializeField] private float dashCooldownInGlide = 0.1f;      //РїРµСЂРµР·Р°СЂСЏРґРєР° СЂС‹РІРєР° РїСЂРё РїР»Р°РЅРёСЂРѕРІР°РЅРёРё
+    private bool canDash = true;                                    //РјРѕР¶РµС‚ Р»Рё РїРµСЂСЃРѕРЅР°Р¶ СЃРґРµР»Р°С‚СЊ СЂС‹РІРѕРє
+    private bool isDashing;                                         //РґРµР»Р°РµС‚ Р»Рё РїРµСЂСЃРѕРЅР°Р¶ СЂС‹РІРѕРє
     
     [Header("HighJump")]
-    [SerializeField] private float highJumpForce = 2.1f;            //сила прыжка перед планированием
-    private bool glideStatus = true;                                //статус планирования
+    [SerializeField] private float highJumpForce = 2.1f;            //СЃРёР»Р° РїСЂС‹Р¶РєР° РїРµСЂРµРґ РїР»Р°РЅРёСЂРѕРІР°РЅРёРµРј
+    private bool glideStatus = true;                                //СЃС‚Р°С‚СѓСЃ РїР»Р°РЅРёСЂРѕРІР°РЅРёСЏ
 
     [Header("Glide")]
-    [SerializeField] private float fallingSpeed = 5f;               //скорость падения персонажа во время планирования
-    [SerializeField] private float glindingSpeed = 8f;              //скорость персонажа во время планирования
-    private float initialGravityScale;                              //первоначальное значение гравитации
-    private bool isGliding;                                         //планирует ли персонаж
+    [SerializeField] private float fallingSpeed = 5f;               //СЃРєРѕСЂРѕСЃС‚СЊ РїР°РґРµРЅРёСЏ РїРµСЂСЃРѕРЅР°Р¶Р° РІРѕ РІСЂРµРјСЏ РїР»Р°РЅРёСЂРѕРІР°РЅРёСЏ
+    [SerializeField] private float glindingSpeed = 8f;              //СЃРєРѕСЂРѕСЃС‚СЊ РїРµСЂСЃРѕРЅР°Р¶Р° РІРѕ РІСЂРµРјСЏ РїР»Р°РЅРёСЂРѕРІР°РЅРёСЏ
+    private float initialGravityScale;                              //РїРµСЂРІРѕРЅР°С‡Р°Р»СЊРЅРѕРµ Р·РЅР°С‡РµРЅРёРµ РіСЂР°РІРёС‚Р°С†РёРё
+    private bool isGliding;                                         //РїР»Р°РЅРёСЂСѓРµС‚ Р»Рё РїРµСЂСЃРѕРЅР°Р¶
 
-    //Компоненты игрового объекта
+    //РљРѕРјРїРѕРЅРµРЅС‚С‹ РёРіСЂРѕРІРѕРіРѕ РѕР±СЉРµРєС‚Р°
     static public Rigidbody2D rb;
     public PlayerInput playerInput;
 
@@ -47,14 +47,14 @@ public class CharacterMovement : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         playerInput = GetComponent<PlayerInput>();
 
-        initialGravityScale = rb.gravityScale;  //хранение первоначальной силы гравитации
+        initialGravityScale = rb.gravityScale;  //С…СЂР°РЅРµРЅРёРµ РїРµСЂРІРѕРЅР°С‡Р°Р»СЊРЅРѕР№ СЃРёР»С‹ РіСЂР°РІРёС‚Р°С†РёРё
 
-        speedController = moveSpeed;            //хранение первоначальной скорость перонажа
+        speedController = moveSpeed;            //С…СЂР°РЅРµРЅРёРµ РїРµСЂРІРѕРЅР°С‡Р°Р»СЊРЅРѕР№ СЃРєРѕСЂРѕСЃС‚СЊ РїРµСЂРѕРЅР°Р¶Р°
     }
 
     private void Update()
     {
-        if (isDashing)                          //блокируем направление движения при рывке
+        if (isDashing)                          //Р±Р»РѕРєРёСЂСѓРµРј РЅР°РїСЂР°РІР»РµРЅРёРµ РґРІРёР¶РµРЅРёСЏ РїСЂРё СЂС‹РІРєРµ
         {
             return;
         }
@@ -63,7 +63,7 @@ public class CharacterMovement : MonoBehaviour
         ObjectChecker.Checker();
     }
     
-    //Передвижение
+    //РџРµСЂРµРґРІРёР¶РµРЅРёРµ
     #region Movement Function
     public void OnMove(InputAction.CallbackContext context)
     {
@@ -72,7 +72,7 @@ public class CharacterMovement : MonoBehaviour
 
     public void Move(Vector2 direction)
     {
-        if (_moveDirection.x > 0 || _moveDirection.x < 0)   //поворачиваем персонажа в зависимости от направления движения (право-лево)
+        if (_moveDirection.x > 0 || _moveDirection.x < 0)   //РїРѕРІРѕСЂР°С‡РёРІР°РµРј РїРµСЂСЃРѕРЅР°Р¶Р° РІ Р·Р°РІРёСЃРёРјРѕСЃС‚Рё РѕС‚ РЅР°РїСЂР°РІР»РµРЅРёСЏ РґРІРёР¶РµРЅРёСЏ (РїСЂР°РІРѕ-Р»РµРІРѕ)
         {
             TurnCheck();
         }
@@ -81,15 +81,15 @@ public class CharacterMovement : MonoBehaviour
     }
     #endregion
 
-    //Поворот персонажа
+    //РџРѕРІРѕСЂРѕС‚ РїРµСЂСЃРѕРЅР°Р¶Р°
     #region Turn Function
     private void TurnCheck()
     {
-        if (_moveDirection.x > 0 && !isFacingRight)         //если двигаемся вправо - поворачиваем персонажа
+        if (_moveDirection.x > 0 && !isFacingRight)         //РµСЃР»Рё РґРІРёРіР°РµРјСЃСЏ РІРїСЂР°РІРѕ - РїРѕРІРѕСЂР°С‡РёРІР°РµРј РїРµСЂСЃРѕРЅР°Р¶Р°
         {
             Turn();
         }
-        else if (_moveDirection.x < 0 && isFacingRight)     //если двигаемся влево - поворачиваем персонажа
+        else if (_moveDirection.x < 0 && isFacingRight)     //РµСЃР»Рё РґРІРёРіР°РµРјСЃСЏ РІР»РµРІРѕ - РїРѕРІРѕСЂР°С‡РёРІР°РµРј РїРµСЂСЃРѕРЅР°Р¶Р°
         {
             Turn();
         }
@@ -98,11 +98,11 @@ public class CharacterMovement : MonoBehaviour
     {
         Vector2 rotator;
 
-        if (isFacingRight)  //если смотрим вправо и двигаемся влево - поворачиваемся
+        if (isFacingRight)  //РµСЃР»Рё СЃРјРѕС‚СЂРёРј РІРїСЂР°РІРѕ Рё РґРІРёРіР°РµРјСЃСЏ РІР»РµРІРѕ - РїРѕРІРѕСЂР°С‡РёРІР°РµРјСЃСЏ
         {
             rotator = new Vector2(transform.rotation.x, 180f);
         }
-        else                //если смотрим влево и двигаемся вправо - поворачиваемся
+        else                //РµСЃР»Рё СЃРјРѕС‚СЂРёРј РІР»РµРІРѕ Рё РґРІРёРіР°РµРјСЃСЏ РІРїСЂР°РІРѕ - РїРѕРІРѕСЂР°С‡РёРІР°РµРјСЃСЏ
         {
             rotator = new Vector2(transform.rotation.x, 0f);
         }
@@ -112,16 +112,16 @@ public class CharacterMovement : MonoBehaviour
     }
     #endregion
 
-    //Прыжок
+    //РџСЂС‹Р¶РѕРє
     #region Jump Function
     public void OnJump(InputAction.CallbackContext context)
     {
-        if (ObjectChecker.isGround && context.performed)                        //если находимся на земле и клавиша нажата - прыгаем                    
+        if (ObjectChecker.isGround && context.performed)                        //РµСЃР»Рё РЅР°С…РѕРґРёРјСЃСЏ РЅР° Р·РµРјР»Рµ Рё РєР»Р°РІРёС€Р° РЅР°Р¶Р°С‚Р° - РїСЂС‹РіР°РµРј                    
         {
             rb.velocity = new Vector2(rb.velocity.x, jumpForce);
             doubleJump = true;
         }
-        else if (!ObjectChecker.isGround && context.performed && doubleJump)    //иначе, если находимся в воздухе, клавиша нажата и есть второй прыжок - прыгаем
+        else if (!ObjectChecker.isGround && context.performed && doubleJump)    //РёРЅР°С‡Рµ, РµСЃР»Рё РЅР°С…РѕРґРёРјСЃСЏ РІ РІРѕР·РґСѓС…Рµ, РєР»Р°РІРёС€Р° РЅР°Р¶Р°С‚Р° Рё РµСЃС‚СЊ РІС‚РѕСЂРѕР№ РїСЂС‹Р¶РѕРє - РїСЂС‹РіР°РµРј
         {
             rb.velocity = new Vector2(rb.velocity.x, doubleJumpForce);
             doubleJump = false;
@@ -129,11 +129,11 @@ public class CharacterMovement : MonoBehaviour
     }
     #endregion
 
-    //Рывок
+    //Р С‹РІРѕРє
     #region Dash Function
     public void OnDash(InputAction.CallbackContext context)
     {
-        if (context.performed && canDash)   //если клавиша сработала и можем сделать рывок - рывок
+        if (context.performed && canDash)   //РµСЃР»Рё РєР»Р°РІРёС€Р° СЃСЂР°Р±РѕС‚Р°Р»Р° Рё РјРѕР¶РµРј СЃРґРµР»Р°С‚СЊ СЂС‹РІРѕРє - СЂС‹РІРѕРє
         {
             StartCoroutine(DashCoroutine());
         }
@@ -142,46 +142,46 @@ public class CharacterMovement : MonoBehaviour
     {
         canDash = false;
         isDashing = true;
-        float dashDirection = isFacingRight ? 1 : -1;               //проверям направление персонажа
+        float dashDirection = isFacingRight ? 1 : -1;               //РїСЂРѕРІРµСЂСЏРј РЅР°РїСЂР°РІР»РµРЅРёРµ РїРµСЂСЃРѕРЅР°Р¶Р°
 
         rb.gravityScale = 0;
         rb.velocity = new Vector2(dashDirection * dashSpeed, 0f);
 
-        yield return new WaitForSeconds(dashDuration);              //задаем длительность рывка
+        yield return new WaitForSeconds(dashDuration);              //Р·Р°РґР°РµРј РґР»РёС‚РµР»СЊРЅРѕСЃС‚СЊ СЂС‹РІРєР°
 
         isDashing = false;
         
-        if (isGliding)  //если персонаж находится в планировании - скорость падения переходит в скорость планирования            
+        if (isGliding)  //РµСЃР»Рё РїРµСЂСЃРѕРЅР°Р¶ РЅР°С…РѕРґРёС‚СЃСЏ РІ РїР»Р°РЅРёСЂРѕРІР°РЅРёРё - СЃРєРѕСЂРѕСЃС‚СЊ РїР°РґРµРЅРёСЏ РїРµСЂРµС…РѕРґРёС‚ РІ СЃРєРѕСЂРѕСЃС‚СЊ РїР»Р°РЅРёСЂРѕРІР°РЅРёСЏ            
         {
             rb.velocity = new Vector2(0f, -fallingSpeed);
-            yield return new WaitForSeconds(dashCooldownInGlide);   //задаем перезарядку при планировании 
+            yield return new WaitForSeconds(dashCooldownInGlide);   //Р·Р°РґР°РµРј РїРµСЂРµР·Р°СЂСЏРґРєСѓ РїСЂРё РїР»Р°РЅРёСЂРѕРІР°РЅРёРё 
         }
-        else            //иначе востанавливаем гравитацию и первоначальный метод движения
+        else            //РёРЅР°С‡Рµ РІРѕСЃС‚Р°РЅР°РІР»РёРІР°РµРј РіСЂР°РІРёС‚Р°С†РёСЋ Рё РїРµСЂРІРѕРЅР°С‡Р°Р»СЊРЅС‹Р№ РјРµС‚РѕРґ РґРІРёР¶РµРЅРёСЏ
         {
             rb.gravityScale = initialGravityScale;
             rb.velocity = new Vector2(0f, rb.velocity.y);
-            yield return new WaitForSeconds(dashCooldown);          //задаем перезарядку на земле и при прыжке
+            yield return new WaitForSeconds(dashCooldown);          //Р·Р°РґР°РµРј РїРµСЂРµР·Р°СЂСЏРґРєСѓ РЅР° Р·РµРјР»Рµ Рё РїСЂРё РїСЂС‹Р¶РєРµ
         }
 
         canDash = true;
     }
     #endregion
 
-    //Высокий прыжок
+    //Р’С‹СЃРѕРєРёР№ РїСЂС‹Р¶РѕРє
     #region HighJump Function
     public void OnHighJump(InputAction.CallbackContext context)
     {
-        if (ObjectChecker.isGround && glideStatus && context.started)   //если персонаж на земле, статус прыжка активирован и клавиша нажата
+        if (ObjectChecker.isGround && glideStatus && context.started)   //РµСЃР»Рё РїРµСЂСЃРѕРЅР°Р¶ РЅР° Р·РµРјР»Рµ, СЃС‚Р°С‚СѓСЃ РїСЂС‹Р¶РєР° Р°РєС‚РёРІРёСЂРѕРІР°РЅ Рё РєР»Р°РІРёС€Р° РЅР°Р¶Р°С‚Р°
         {
             glideStatus = false;
             moveSpeed = 0f;
         }
-        if (ObjectChecker.isGround && context.performed)                //если персонаж на земле и клавиша сработала
+        if (ObjectChecker.isGround && context.performed)                //РµСЃР»Рё РїРµСЂСЃРѕРЅР°Р¶ РЅР° Р·РµРјР»Рµ Рё РєР»Р°РІРёС€Р° СЃСЂР°Р±РѕС‚Р°Р»Р°
         {
             rb.velocity = new Vector2(rb.velocity.x, jumpForce * highJumpForce);
             moveSpeed = speedController;
         }
-        else if (context.canceled)                                      //если клавиша отпущенна
+        else if (context.canceled)                                      //РµСЃР»Рё РєР»Р°РІРёС€Р° РѕС‚РїСѓС‰РµРЅРЅР°
         {
             glideStatus = true;
             moveSpeed = speedController;
@@ -189,18 +189,18 @@ public class CharacterMovement : MonoBehaviour
     }
     #endregion
 
-    //Планирование
+    //РџР»Р°РЅРёСЂРѕРІР°РЅРёРµ
     #region Glide Function
     public void OnGlide(InputAction.CallbackContext context)
     {
-        if (context.performed && rb.velocity.y < 0)     //если клавиша сработала и персонаж падает
+        if (context.performed && rb.velocity.y < 0)     //РµСЃР»Рё РєР»Р°РІРёС€Р° СЃСЂР°Р±РѕС‚Р°Р»Р° Рё РїРµСЂСЃРѕРЅР°Р¶ РїР°РґР°РµС‚
         {
             isGliding = true;
             rb.gravityScale = 0;
             moveSpeed = glindingSpeed;
             rb.velocity = new Vector2(rb.velocity.x, -fallingSpeed);
         }
-        else                                            //иначе выходим из планирования
+        else                                            //РёРЅР°С‡Рµ РІС‹С…РѕРґРёРј РёР· РїР»Р°РЅРёСЂРѕРІР°РЅРёСЏ
         {
             isGliding = false;
             moveSpeed = speedController;
