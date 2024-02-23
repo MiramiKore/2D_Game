@@ -38,6 +38,11 @@ public class CharacterMovement : MonoBehaviour
     private float initialGravityScale;                              //первоначальное значение гравитации
     private bool isGliding;                                         //планирует ли персонаж
 
+    [Header("GroundCheck")]
+    public Transform groundCheckPos;
+    public Vector2 groundCheckSize = new Vector2(0.5f, 0.05f);
+    public LayerMask groundLayer;
+
     //Компоненты игрового объекта
     static public Rigidbody2D rb;
     public PlayerInput playerInput;
@@ -60,9 +65,16 @@ public class CharacterMovement : MonoBehaviour
         }
 
         Move(_moveDirection);
-        ObjectChecker.Checker();
     }
-    
+    public bool isGrounded()
+    {
+        if (Physics2D.OverlapBox(groundCheckPos.position, groundCheckSize, 0, groundLayer))
+        {
+            return true;
+        }
+        return false;
+    }
+
     //Передвижение
     #region Movement Function
     public void OnMove(InputAction.CallbackContext context)
@@ -116,12 +128,12 @@ public class CharacterMovement : MonoBehaviour
     #region Jump Function
     public void OnJump(InputAction.CallbackContext context)
     {
-        if (ObjectChecker.isGround && context.performed)                        //если находимся на земле и клавиша нажата - прыгаем                    
+        if (context.performed && isGrounded())       //если находимся на земле и клавиша нажата - прыгаем                    
         {
             rb.velocity = new Vector2(rb.velocity.x, jumpForce);
             doubleJump = true;
         }
-        else if (!ObjectChecker.isGround && context.performed && doubleJump)    //иначе, если находимся в воздухе, клавиша нажата и есть второй прыжок - прыгаем
+        else if (context.performed && doubleJump)    //иначе, если находимся в воздухе, клавиша нажата и есть второй прыжок - прыгаем
         {
             rb.velocity = new Vector2(rb.velocity.x, doubleJumpForce);
             doubleJump = false;
@@ -171,12 +183,12 @@ public class CharacterMovement : MonoBehaviour
     #region HighJump Function
     public void OnHighJump(InputAction.CallbackContext context)
     {
-        if (ObjectChecker.isGround && glideStatus && context.started)   //если персонаж на земле, статус прыжка активирован и клавиша нажата
+        if (glideStatus && context.started && isGrounded())   //если персонаж на земле, статус прыжка активирован и клавиша нажата
         {
             glideStatus = false;
             moveSpeed = 0f;
         }
-        if (ObjectChecker.isGround && context.performed)                //если персонаж на земле и клавиша сработала
+        if (context.performed && isGrounded())                //если персонаж на земле и клавиша сработала
         {
             rb.velocity = new Vector2(rb.velocity.x, jumpForce * highJumpForce);
             moveSpeed = speedController;
@@ -193,7 +205,7 @@ public class CharacterMovement : MonoBehaviour
     #region Glide Function
     public void OnGlide(InputAction.CallbackContext context)
     {
-        if (context.performed && rb.velocity.y < 0)     //если клавиша сработала и персонаж падает
+        if (context.performed && rb.velocity.y < 0 && !isGrounded())  //если клавиша сработала и персонаж падает
         {
             isGliding = true;
             rb.gravityScale = 0;
@@ -208,4 +220,10 @@ public class CharacterMovement : MonoBehaviour
         }
     }
     #endregion
+    //Колайдер столкновения с землей
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawCube(groundCheckPos.position, groundCheckSize);
+    }
 }
