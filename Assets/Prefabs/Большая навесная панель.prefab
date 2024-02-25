@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7271390741583911076}
   - component: {fileID: 4942713197499358818}
-  - component: {fileID: 435674550347186860}
+  - component: {fileID: 3488478394551452574}
   m_Layer: 0
   m_Name: "\u0411\u043E\u043B\u044C\u0448\u0430\u044F \u043D\u0430\u0432\u0435\u0441\u043D\u0430\u044F
     \u043F\u0430\u043D\u0435\u043B\u044C"
@@ -86,8 +86,8 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!61 &435674550347186860
-BoxCollider2D:
+--- !u!70 &3488478394551452574
+CapsuleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -118,16 +118,6 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.03717041, y: -0.07433927}
-  m_SpriteTilingProperty:
-    border: {x: 0.75, y: 0.84999996, z: 0.76, w: 1.65}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 7.2, y: 4.8}
-    newSize: {x: 7.2, y: 4.8}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 5.0937195, y: 1.3803885}
-  m_EdgeRadius: 0
+  m_Offset: {x: 0.000006194234, y: -0.039005283}
+  m_Size: {x: 5.4060345, y: 1.3875309}
+  m_Direction: 1

@@ -5,13 +5,16 @@ using UnityEngine.InputSystem;
 
 public class Animations : MonoBehaviour
 {
+    [Header("Movement")]
+    static public bool move;
+
     [Header("Damage")]
-    [SerializeField] private bool damageLow;
-    [SerializeField] private bool damageBig;
+    static public bool damageLow;
+    static public bool damageBig;
 
     [Header("Attack")]
-    [SerializeField] private bool attackUp;
-    [SerializeField] private bool attack;
+    static public bool attackUp;
+    static public bool attack;
 
     Animator animator;
 
@@ -29,5 +32,6 @@ public class Animations : MonoBehaviour
     {
         animator.SetBool("isAttack", attack);
         animator.SetBool("isAttackUp", attackUp);
+        animator.SetBool("isMove", move);
     }
 }

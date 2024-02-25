@@ -6,6 +6,7 @@ using System.Runtime.CompilerServices;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using static UnityEditor.Timeline.TimelinePlaybackControls;
 
 public class CharacterMovement : MonoBehaviour
 {  
@@ -18,7 +19,8 @@ public class CharacterMovement : MonoBehaviour
     [Header("Jump")]
     [SerializeField] private float jumpForce = 12f;                 //сила прыжка
     [SerializeField] private float doubleJumpForce = 0.8f;          //сила второго прыжка
-    private bool doubleJump;                                        //возможность второго прыжка
+    public bool doubleJump;                                        //возможность второго прыжка
+    public float jumpDuration;
 
     [Header("Dash")]
     [SerializeField] private float dashSpeed = 20f;                 //скорость рывка
@@ -36,7 +38,7 @@ public class CharacterMovement : MonoBehaviour
     [SerializeField] private float fallingSpeed = 5f;               //скорость падения персонажа во время планирования
     [SerializeField] private float glindingSpeed = 8f;              //скорость персонажа во время планирования
     private float initialGravityScale;                              //первоначальное значение гравитации
-    private bool isGliding;                                         //планирует ли персонаж
+    public bool isGliding;                                         //планирует ли персонаж
 
     [Header("GroundCheck")]
     public Transform groundCheckPos;
@@ -45,12 +47,10 @@ public class CharacterMovement : MonoBehaviour
 
     //Компоненты игрового объекта
     static public Rigidbody2D rb;
-    public PlayerInput playerInput;
 
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-        playerInput = GetComponent<PlayerInput>();
 
         initialGravityScale = rb.gravityScale;  //хранение первоначальной силы гравитации
 
@@ -87,9 +87,16 @@ public class CharacterMovement : MonoBehaviour
         if (_moveDirection.x > 0 || _moveDirection.x < 0)   //поворачиваем персонажа в зависимости от направления движения (право-лево)
         {
             TurnCheck();
+            Animations.move = true;
+        }
+        else
+        {
+            Animations.move = false;
         }
 
         rb.velocity = new Vector2(_moveDirection.x * moveSpeed, rb.velocity.y);
+
+
     }
     #endregion
 
@@ -128,16 +135,25 @@ public class CharacterMovement : MonoBehaviour
     #region Jump Function
     public void OnJump(InputAction.CallbackContext context)
     {
-        if (context.performed && isGrounded())       //если находимся на земле и клавиша нажата - прыгаем                    
+        if (context.performed && isGrounded())
         {
-            rb.velocity = new Vector2(rb.velocity.x, jumpForce);
-            doubleJump = true;
+            StartCoroutine(JumpCoroutine());
         }
-        else if (context.performed && doubleJump)    //иначе, если находимся в воздухе, клавиша нажата и есть второй прыжок - прыгаем
+        if (context.performed && doubleJump && !isGrounded())
         {
             rb.velocity = new Vector2(rb.velocity.x, doubleJumpForce);
             doubleJump = false;
         }
+    }
+    //Первый прыжок
+    private IEnumerator JumpCoroutine()
+    {
+        rb.velocity = new Vector2(rb.velocity.x, jumpForce);
+        doubleJump = true;
+
+        yield return new WaitForSeconds(jumpDuration);
+
+        doubleJump = false;
     }
     #endregion
 
