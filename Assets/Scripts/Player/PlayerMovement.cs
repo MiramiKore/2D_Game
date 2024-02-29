@@ -8,17 +8,17 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using static UnityEditor.Timeline.TimelinePlaybackControls;
 
-public class CharacterMovement : MonoBehaviour
+public class PlayerMovement : MonoBehaviour
 {  
     [Header("Movement")]
-    [HideInInspector] public bool isFacingRight = true;             //положение поворота персонажа
-    [SerializeField] private float moveSpeed = 12f;                 //скорость перемещения
-    private float speedController;                                  //константа скорости
-    private Vector2 _moveDirection;                                 //вектор движения
+    [HideInInspector] public bool isFacingRight = true;            //положение поворота персонажа
+    [SerializeField] public float moveSpeed = 12f;                 //скорость перемещения
+    public float speedController;                                  //константа скорости
+    private Vector2 _moveDirection;                                //вектор движения
 
     [Header("Jump")]
-    [SerializeField] private float jumpForce = 12f;                 //сила прыжка
-    [SerializeField] private float doubleJumpForce = 0.8f;          //сила второго прыжка
+    [SerializeField] public float jumpForce = 12f;                 //сила прыжка
+    [SerializeField] private float doubleJumpForce = 0.8f;         //сила второго прыжка
     public bool doubleJump;                                        //возможность второго прыжка
     public float jumpDuration;
 
@@ -38,7 +38,8 @@ public class CharacterMovement : MonoBehaviour
     [SerializeField] private float fallingSpeed = 5f;               //скорость падения персонажа во время планирования
     [SerializeField] private float glindingSpeed = 8f;              //скорость персонажа во время планирования
     private float initialGravityScale;                              //первоначальное значение гравитации
-    public bool isGliding;                                         //планирует ли персонаж
+    public bool isGliding;                                          //планирует ли персонаж
+    public float glideColldown = 1f;
 
     [Header("GroundCheck")]
     public Transform groundCheckPos;
@@ -203,13 +204,14 @@ public class CharacterMovement : MonoBehaviour
         {
             glideStatus = false;
             moveSpeed = 0f;
+            Animations.move = false;
         }
         if (context.performed && isGrounded())                //если персонаж на земле и клавиша сработала
         {
             rb.velocity = new Vector2(rb.velocity.x, jumpForce * highJumpForce);
             moveSpeed = speedController;
         }
-        else if (context.canceled)                                      //если клавиша отпущенна
+        else if (context.canceled)                            //если клавиша отпущенна
         {
             glideStatus = true;
             moveSpeed = speedController;
@@ -221,14 +223,30 @@ public class CharacterMovement : MonoBehaviour
     #region Glide Function
     public void OnGlide(InputAction.CallbackContext context)
     {
-        if (context.performed && rb.velocity.y < 0 && !isGrounded())  //если клавиша сработала и персонаж падает
+        if (context.performed && rb.velocity.y < 0)  //если клавиша сработала и персонаж падает
         {
-            isGliding = true;
-            rb.gravityScale = 0;
-            moveSpeed = glindingSpeed;
-            rb.velocity = new Vector2(rb.velocity.x, -fallingSpeed);
+            StartCoroutine(GlideCoroutine());
         }
-        else                                            //иначе выходим из планирования
+        else if (context.canceled)
+        {
+            isGliding = false;
+        }
+    }
+
+    private IEnumerator GlideCoroutine()
+    {
+        isGliding = true;
+        rb.gravityScale = 0;
+        moveSpeed = glindingSpeed;
+        rb.velocity = new Vector2(rb.velocity.x, -fallingSpeed);
+
+        yield return new WaitForSeconds(glideColldown);
+
+        if (!isGrounded() && isGliding)
+        {
+            yield return GlideCoroutine();
+        }
+        else
         {
             isGliding = false;
             moveSpeed = speedController;
@@ -236,6 +254,7 @@ public class CharacterMovement : MonoBehaviour
         }
     }
     #endregion
+
     //Колайдер столкновения с землей
     private void OnDrawGizmosSelected()
     {

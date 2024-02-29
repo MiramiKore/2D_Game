@@ -75,37 +75,10 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                 {
                     ""name"": ""Attack"",
                     ""type"": ""PassThrough"",
-                    ""id"": ""76d411f9-2b4b-45ba-a4e2-6814097debce"",
+                    ""id"": ""2d5629ae-8ffc-44d4-9644-5b81f4fd1157"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""VectorUp"",
-                    ""type"": ""PassThrough"",
-                    ""id"": ""01e04c31-99ad-4ed0-b8f2-5e98274b5b27"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""DamageBig"",
-                    ""type"": ""PassThrough"",
-                    ""id"": ""3d8a94d7-845f-414d-9782-07ab4e02733b"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""DamageLow"",
-                    ""type"": ""PassThrough"",
-                    ""id"": ""f3735bc7-2d2d-4409-80dd-a21417e30009"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
+                    ""interactions"": ""Tap"",
                     ""initialStateCheck"": false
                 }
             ],
@@ -255,50 +228,6 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""229d7791-ed33-4dee-b69a-3f7b5898c900"",
-                    ""path"": ""<Keyboard>/e"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Keyboard & Mouse"",
-                    ""action"": ""DamageBig"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""e1ebf7fc-1615-48cd-b593-927418363214"",
-                    ""path"": ""<Mouse>/leftButton"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Keyboard & Mouse"",
-                    ""action"": ""Attack"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""ba48a898-c4e0-455a-8674-4eacb7f8f35a"",
-                    ""path"": ""<Keyboard>/q"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Keyboard & Mouse"",
-                    ""action"": ""DamageLow"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""f3f3bc15-319a-4d9f-a399-afbb16e98b8f"",
-                    ""path"": ""<Keyboard>/w"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Keyboard & Mouse"",
-                    ""action"": ""VectorUp"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
                     ""id"": ""a9e828f8-c9a0-4dd0-bb9f-59f432ee63f9"",
                     ""path"": ""<Keyboard>/q"",
                     ""interactions"": """",
@@ -316,6 +245,28 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": ""Keyboard & Mouse"",
                     ""action"": ""Glide"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""00c32800-f1de-4a2b-98da-f9851520e154"",
+                    ""path"": ""<Keyboard>/leftCtrl"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard & Mouse"",
+                    ""action"": ""Attack"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""88e7765b-a44c-4134-9dcc-3cdc4adaef73"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard & Mouse"",
+                    ""action"": ""Attack"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -360,9 +311,6 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         m_Player_Glide = m_Player.FindAction("Glide", throwIfNotFound: true);
         m_Player_Dash = m_Player.FindAction("Dash", throwIfNotFound: true);
         m_Player_Attack = m_Player.FindAction("Attack", throwIfNotFound: true);
-        m_Player_VectorUp = m_Player.FindAction("VectorUp", throwIfNotFound: true);
-        m_Player_DamageBig = m_Player.FindAction("DamageBig", throwIfNotFound: true);
-        m_Player_DamageLow = m_Player.FindAction("DamageLow", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -430,9 +378,6 @@ public partial class @Controls: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Glide;
     private readonly InputAction m_Player_Dash;
     private readonly InputAction m_Player_Attack;
-    private readonly InputAction m_Player_VectorUp;
-    private readonly InputAction m_Player_DamageBig;
-    private readonly InputAction m_Player_DamageLow;
     public struct PlayerActions
     {
         private @Controls m_Wrapper;
@@ -443,9 +388,6 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         public InputAction @Glide => m_Wrapper.m_Player_Glide;
         public InputAction @Dash => m_Wrapper.m_Player_Dash;
         public InputAction @Attack => m_Wrapper.m_Player_Attack;
-        public InputAction @VectorUp => m_Wrapper.m_Player_VectorUp;
-        public InputAction @DamageBig => m_Wrapper.m_Player_DamageBig;
-        public InputAction @DamageLow => m_Wrapper.m_Player_DamageLow;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -473,15 +415,6 @@ public partial class @Controls: IInputActionCollection2, IDisposable
             @Attack.started += instance.OnAttack;
             @Attack.performed += instance.OnAttack;
             @Attack.canceled += instance.OnAttack;
-            @VectorUp.started += instance.OnVectorUp;
-            @VectorUp.performed += instance.OnVectorUp;
-            @VectorUp.canceled += instance.OnVectorUp;
-            @DamageBig.started += instance.OnDamageBig;
-            @DamageBig.performed += instance.OnDamageBig;
-            @DamageBig.canceled += instance.OnDamageBig;
-            @DamageLow.started += instance.OnDamageLow;
-            @DamageLow.performed += instance.OnDamageLow;
-            @DamageLow.canceled += instance.OnDamageLow;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -504,15 +437,6 @@ public partial class @Controls: IInputActionCollection2, IDisposable
             @Attack.started -= instance.OnAttack;
             @Attack.performed -= instance.OnAttack;
             @Attack.canceled -= instance.OnAttack;
-            @VectorUp.started -= instance.OnVectorUp;
-            @VectorUp.performed -= instance.OnVectorUp;
-            @VectorUp.canceled -= instance.OnVectorUp;
-            @DamageBig.started -= instance.OnDamageBig;
-            @DamageBig.performed -= instance.OnDamageBig;
-            @DamageBig.canceled -= instance.OnDamageBig;
-            @DamageLow.started -= instance.OnDamageLow;
-            @DamageLow.performed -= instance.OnDamageLow;
-            @DamageLow.canceled -= instance.OnDamageLow;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -556,8 +480,5 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         void OnGlide(InputAction.CallbackContext context);
         void OnDash(InputAction.CallbackContext context);
         void OnAttack(InputAction.CallbackContext context);
-        void OnVectorUp(InputAction.CallbackContext context);
-        void OnDamageBig(InputAction.CallbackContext context);
-        void OnDamageLow(InputAction.CallbackContext context);
     }
 }

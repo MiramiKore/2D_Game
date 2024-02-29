@@ -30,7 +30,6 @@ public class Animations : MonoBehaviour
 
     private void AttackAnimation()
     {
-        animator.SetBool("isAttack", attack);
         animator.SetBool("isAttackUp", attackUp);
         animator.SetBool("isMove", move);
     }
