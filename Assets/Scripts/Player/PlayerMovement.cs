@@ -10,17 +10,17 @@ using static UnityEditor.Timeline.TimelinePlaybackControls;
 
 public class PlayerMovement : MonoBehaviour
 {  
-    [Header("Movement")]
-    [HideInInspector] public bool isFacingRight = true;            //положение поворота персонажа
+    [Header("Move")]
     [SerializeField] public float moveSpeed = 12f;                 //скорость перемещения
-    public float speedController;                                  //константа скорости
+    private float speedController;                                  //константа скорости
     private Vector2 _moveDirection;                                //вектор движения
+    [HideInInspector] public bool isFacingRight = true;            //положение поворота персонажа
 
     [Header("Jump")]
     [SerializeField] public float jumpForce = 12f;                 //сила прыжка
     [SerializeField] private float doubleJumpForce = 0.8f;         //сила второго прыжка
-    public bool doubleJump;                                        //возможность второго прыжка
-    public float jumpDuration;
+    [SerializeField] private float jumpDuration;                   //время через которое выключается второй прыжок
+    private bool doubleJump;                                       //возможность второго прыжка
 
     [Header("Dash")]
     [SerializeField] private float dashSpeed = 20f;                 //скорость рывка
@@ -37,14 +37,16 @@ public class PlayerMovement : MonoBehaviour
     [Header("Glide")]
     [SerializeField] private float fallingSpeed = 5f;               //скорость падения персонажа во время планирования
     [SerializeField] private float glindingSpeed = 8f;              //скорость персонажа во время планирования
+    [SerializeField] private float glideColldown = 0.25f;           //время через которое проверям - летит ли персонаж
     private float initialGravityScale;                              //первоначальное значение гравитации
-    public bool isGliding;                                          //планирует ли персонаж
-    public float glideColldown = 1f;
+    private bool isGliding;                                         //планирует ли персонаж
 
     [Header("GroundCheck")]
     public Transform groundCheckPos;
     public Vector2 groundCheckSize = new Vector2(0.5f, 0.05f);
     public LayerMask groundLayer;
+
+    Animator animator;
 
     //Компоненты игрового объекта
     static public Rigidbody2D rb;
@@ -52,6 +54,7 @@ public class PlayerMovement : MonoBehaviour
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        animator = GetComponent<Animator>();
 
         initialGravityScale = rb.gravityScale;  //хранение первоначальной силы гравитации
 
@@ -139,10 +142,12 @@ public class PlayerMovement : MonoBehaviour
         if (context.performed && isGrounded())
         {
             StartCoroutine(JumpCoroutine());
+            animator.SetTrigger("isJump");
         }
         if (context.performed && doubleJump && !isGrounded())
         {
             rb.velocity = new Vector2(rb.velocity.x, doubleJumpForce);
+            animator.SetTrigger("isSecondJump");
             doubleJump = false;
         }
     }
