@@ -70,6 +70,8 @@ namespace Player {
             }
 
             Move(_moveDirection);
+
+            animator.SetBool("isGlide", isGliding);
         }
         public bool isGrounded()
         {
@@ -232,6 +234,7 @@ namespace Player {
             if (context.performed && rb.velocity.y < 0)  //если клавиша сработала и персонаж падает
             {
                 StartCoroutine(GlideCoroutine());
+                animator.SetTrigger("isStartGlide");
             }
             else if (context.canceled)
             {

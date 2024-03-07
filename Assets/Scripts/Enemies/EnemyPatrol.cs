@@ -40,8 +40,6 @@ namespace Enemy
 
         private void Update()
         {
-            Vector2 rotator;
-
             if (isChasing)
             {
                 if (transform.position.x > playerTransform.position.x)
