@@ -3,28 +3,38 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerHealth : MonoBehaviour
+namespace Player
 {
-    public int maxHealth = 10;
-    public int health;
-
-    private void Start()
+    public class PlayerHealth : MonoBehaviour
     {
-        health = maxHealth;
-    }
+        public int maxHealth = 10;
+        public int health;
+        public float pushForce = 45f;
 
-    public void TakeDamage(int damage)
-    {
-        health -= damage;
-        if (health <= 0)
+        private Animator animator;
+        private Rigidbody2D rb;
+
+        private void Start()
         {
-            Destroy(gameObject);
+            health = maxHealth;
+            animator = GetComponent<Animator>();
+            rb = GetComponent<Rigidbody2D>();
+        }
+
+        public void TakeDamage(int damage)
+        {
+            animator.SetTrigger("isDamageLow");
+            health -= damage;
+
+            if (health <= 0)
+            {
+                Debug.Log("PlayerDie");
+                //Destroy(gameObject);
+            }
+        }
+        public void TakeSoulDamage(int damage)
+        {
+
         }
     }
-    public void TakeSoulDamage(int damage)
-    {
-    
-    }
-
-
 }

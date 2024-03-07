@@ -2,45 +2,48 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyAttack : MonoBehaviour
+namespace Enemy
 {
-    [SerializeField] private int attackDamage;
-    public bool attack;
-    public PlayerHealth playerHealth;
-    [SerializeField] private float attackEndTime = 0.5f;
-    [SerializeField] private float soulCoefficient = 9.6f;
-    private int attackSoulCoefficient;                      //атака по коэффиценту души
-
-    Animator animator;
-
-    private void Start()
+    public class EnemyAttack : MonoBehaviour
     {
-        animator = GetComponent<Animator>();
+        [SerializeField] private int attackDamage;
+        public bool attack;
+        public Player.PlayerHealth playerHealth;
+        [SerializeField] private float attackEndTime = 0.5f;
+        [SerializeField] private float soulCoefficient = 9.6f;
+        private int attackSoulCoefficient;                      //атака по коэффиценту души
 
-        attackSoulCoefficient = (int)(attackDamage * (soulCoefficient / 8));
+        Animator animator;
 
-        attackDamage = (int)(attackDamage + (attackDamage * soulCoefficient));
-    }
-
-    private void Update()
-    {
-        animator.SetBool("isGuardianAttack", attack);
-    }
-
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        if (collision.gameObject.tag == "Player")
+        private void Start()
         {
-            playerHealth.TakeDamage(attackDamage);
-            attack = true;
-            StartCoroutine(AttackCoroutine());
+            animator = GetComponent<Animator>();
+
+            attackSoulCoefficient = (int)(attackDamage * (soulCoefficient / 8));
+
+            attackDamage = (int)(attackDamage + (attackDamage * soulCoefficient));
         }
-    }
 
-    private IEnumerator AttackCoroutine()
-    {
-        yield return new WaitForSeconds(attackEndTime);
+        private void Update()
+        {
+            animator.SetBool("isGuardianAttack", attack);
+        }
 
-        attack = false;
+        private void OnCollisionEnter2D(Collision2D collision)
+        {
+            if (collision.gameObject.tag == "Player")
+            {
+                playerHealth.TakeDamage(attackDamage);
+                attack = true;
+                StartCoroutine(AttackCoroutine());
+            }
+        }
+
+        private IEnumerator AttackCoroutine()
+        {
+            yield return new WaitForSeconds(attackEndTime);
+
+            attack = false;
+        }
     }
 }

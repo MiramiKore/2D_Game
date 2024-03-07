@@ -3,25 +3,28 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class Animations : MonoBehaviour
-{
-    [Header("Movement")]
-    static public bool move;
 
-    Animator animator;
-
-    void Start()
+namespace Player {
+    public class Animations : MonoBehaviour
     {
-        animator = GetComponent<Animator>();
-    }
+        [Header("Movement")]
+        static public bool move;
 
-    void Update()
-    {
-        AttackAnimation();
-    }
+        Animator animator;
 
-    private void AttackAnimation()
-    {
-        animator.SetBool("isMove", move);
+        void Start()
+        {
+            animator = GetComponent<Animator>();
+        }
+
+        void Update()
+        {
+            AttackAnimation();
+        }
+
+        private void AttackAnimation()
+        {
+            animator.SetBool("isMove", move);
+        }
     }
 }

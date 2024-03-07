@@ -12,12 +12,12 @@ public class CameraFollowObject : MonoBehaviour
 
     private Coroutine turnCorotine;
 
-    private PlayerMovement chMovement;
+    private Player.PlayerMovement chMovement;
     private bool isFacingRight;
 
     private void Awake()
     {
-        chMovement = playerTransform.gameObject.GetComponent<PlayerMovement>();
+        chMovement = playerTransform.gameObject.GetComponent<Player.PlayerMovement>();
         isFacingRight = chMovement.isFacingRight;
     }
 
